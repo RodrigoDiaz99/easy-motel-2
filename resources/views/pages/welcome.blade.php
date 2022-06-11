@@ -6,9 +6,9 @@
             <div class="header-body text-center mb-7">
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-md-9 pt-5">
-                        <h1 class="text-white">{{ __('Welcome to Argon Dashboard Pro Laravel Live Preview.') }}</h1>
+                        <h1 class="text-white">{{ __('Bienvenido al sistema de EasyMotel') }}</h1>
                         <h2 class="text-white">
-                            {{ __('Kickstart your Laravel web app like a PRO') }}
+                            {{ __('Inicie sesión con sus credenciales para acceder al sistema.') }}
                         </h2>
 
                         <p class="text-lead text-light mt-3 mb-0">

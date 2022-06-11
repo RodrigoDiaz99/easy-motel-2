@@ -11,15 +11,18 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
-    return view('pages.welcome');
+    return view('auth.login');
 })->name('welcome');
 
 Auth::routes();
 
 Route::get('dashboard', 'HomeController@index')->name('home');
-Route::get('pricing', 'PageController@pricing')->name('page.pricing');
-Route::get('lock', 'PageController@lock')->name('page.lock');
+// Route::get('pricing', 'PageController@pricing')->name('page.pricing');
+// Route::get('lock', 'PageController@lock')->name('page.lock');
 
 Route::group(['middleware' => 'auth'], function () {
 
