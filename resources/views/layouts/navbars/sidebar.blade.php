@@ -19,7 +19,7 @@
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                 <!-- Nav items -->
-                <ul class="navbar-nav">
+                {{-- <ul class="navbar-nav">
                     <li class="nav-item {{ $parentSection == 'dashboards' ? 'active' : '' }}">
                         <a class="nav-link collapsed" href="#navbar-dashboards" data-toggle="collapse" role="button" aria-expanded="{{ $parentSection == 'dashboards' ? 'true' : '' }}" aria-controls="navbar-dashboards">
                             <i class="ni ni-shop text-primary"></i>
@@ -207,7 +207,170 @@
                             <span class="nav-link-text">{{ __('Calendar') }}</span>
                         </a>
                     </li>
+                </ul> --}}
+
+                {{-- Contenido original EasyMotel --}}
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('home') }}">
+                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">
+                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-bell-concierge"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Áreas de Establecimintos</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">
+                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Todos Mis Establecimientos</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">
+                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-bell-concierge"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Recepción</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-xs text-danger font-weight-bolder opacity-6">Mis Hoteles</h6>
+                    </li>
+
+                    @forelse ($hotels as $hotel)
+                        <li class="nav-item mt-3">
+                            <h6 class="ps-4 ms-2 text-uppercase text-xs text-primary font-weight-bolder opacity-6">
+                                {{ $hotel->name }}</h6>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('establishments.room-areas.index', $hotel->id) }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Áreas de Habitaciones</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('establishments.rooms.index', $hotel->id) }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Habitaciones</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('product.index') }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Productos</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('tipo.index') }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Tipos de producto</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('inventory.index') }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Inventario</span>
+                            </a>
+                        </li>
+                    @empty
+                        <li class="nav-item mt-3">
+                            <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-danger">NO HAY HOTELES
+                            </h6>
+                        </li>
+                    @endforelse
+                    {{-- Sección Motel --}}
+
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-xs text-danger font-weight-bolder opacity-6">Mis Moteles</h6>
+                    </li>
+
+                    @forelse ($motels as $motel)
+                        <li class="nav-item mt-3">
+                            <h6 class="ps-4 ms-2 text-uppercase text-xs text-primary font-weight-bolder opacity-6">
+                                {{ $motel->name }}</h6>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('establishments.room-areas.index', $motel->id) }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Áreas de Habitaciones</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('establishments.rooms.index', $motel->id) }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Habitaciones</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('product.index') }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Productos</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('tipo.index') }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Tipos de producto</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('inventory.index') }}">
+                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Inventario</span>
+                            </a>
+                        </li>
+                    @empty
+                        <li class="nav-item mt-3">
+                            <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-danger">NO HAY MOTELES
+                            </h6>
+                        </li>
+                    @endforelse
                 </ul>
+                {{-- Fin Contenido --}}
                 <!-- Divider -->
                 <hr class="my-3">
                 <!-- Heading -->

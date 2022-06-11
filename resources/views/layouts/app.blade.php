@@ -27,7 +27,7 @@
                 @csrf
             </form>
             @if (!in_array(request()->route()->getName(), ['welcome', 'page.pricing', 'page.lock']))
-                @include('layouts.navbars.sidebar')
+                @include('layouts.navbars.sidebar', ['hotels'])
             @endif
         @endauth
 

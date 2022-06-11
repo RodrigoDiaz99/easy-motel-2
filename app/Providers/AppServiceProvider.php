@@ -2,25 +2,12 @@
 
 namespace App\Providers;
 
-use App\Item;
-use App\User;
-use App\Observers\ItemObserver;
-use App\Observers\UserObserver;
-use Illuminate\Support\ServiceProvider;
+use App\Models\Establishment;
 
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        Item::observe(ItemObserver::class);
-        User::observe(UserObserver::class);
-    }
-
     /**
      * Register any application services.
      *
@@ -29,5 +16,20 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        View::composer('layouts.navbars.sidebar', function ($view) {
+
+            $hotels = Establishment::where('establishment_types_id', '1')->orderBy('id', 'ASC')->get();
+            $motels = Establishment::where('establishment_types_id', '2')->orderBy('id', 'ASC')->get();
+            return $view->with('hotels', $hotels)->with('motels', $motels);;
+        });
     }
 }
