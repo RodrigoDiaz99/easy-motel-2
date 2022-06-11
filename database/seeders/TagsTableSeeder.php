@@ -1,7 +1,11 @@
 <?php
 
-use Illuminate\Database\Seeder;
 
+namespace Database\Seeders;
+use Illuminate\Support\Facades\DB;
+
+
+use Illuminate\Database\Seeder;
 class TagsTableSeeder extends Seeder
 {
     /**
@@ -11,7 +15,7 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
         DB::table('tags')->insert([
             'id' => 1,
             'name' => 'Hot',

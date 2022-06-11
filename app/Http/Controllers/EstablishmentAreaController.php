@@ -13,7 +13,7 @@ class EstablishmentAreaController extends Controller
      */
     public function index()
     {
-        return view('establishment-area.index');
+         return view('establishment-area.index');
     }
 
     /**

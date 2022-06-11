@@ -1,5 +1,9 @@
 <?php
 
+namespace Database\Seeders;
+use Illuminate\Support\Facades\DB;
+
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,9 +24,8 @@ class DatabaseSeeder extends Seeder
         DB::table('categories')->truncate();
         DB::table('items')->truncate();
 
-        $this->call([RolesTableSeeder::class, UsersTableSeeder::class]);
         $this->call([TagsTableSeeder::class, CategoriesTableSeeder::class, ItemsTableSeeder::class]);
-
+        $this->call([RolesSeeder::class, UserSeeder::class, EstablishmentTypeSeeder::class]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
 }
