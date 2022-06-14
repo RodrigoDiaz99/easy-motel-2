@@ -11,6 +11,8 @@
         <!-- Favicon -->
         <link href="{{ asset('argon') }}/img/brand/favicon.png" rel="icon" type="image/png">
         <!-- Fonts -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
         <!-- Icons -->
         <link href="{{ asset('argon') }}/vendor/nucleo/css/nucleo.css" rel="stylesheet">
@@ -55,5 +57,7 @@
         <!-- Argon JS -->
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
         <script src="{{ asset('argon') }}/js/demo.min.js"></script>
+        @yield('scripts')
+
     </body>
 </html>

@@ -27,13 +27,18 @@ class Product extends Model
     ];
     public function inventary()
     {
-        return $this->belongsTo(Product_inventory::class,'products_id','product_inventories_id');
+        return $this->belongsTo(Product_inventory::class, 'products_id', 'product_inventories_id');
     }
-    public function type(){
-        return $this->hasMany(Product_type::class,'id');
+    public function type()
+    {
+        return $this->hasMany(Product_type::class, 'id');
     }
-    public function establishment(){
-        return $this->hasMany(Establishment::class,'id');
+    public function establishment()
+    {
+        return $this->hasMany(Establishment::class, 'id');
     }
-
+    public function ingredient()
+    {
+        return $this->hasMany(Ingredient::class);
+    }
 }

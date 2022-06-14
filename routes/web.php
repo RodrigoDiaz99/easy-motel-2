@@ -20,7 +20,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('dashboard', 'HomeController@index')->name('home');
 // Route::get('pricing', 'PageController@pricing')->name('page.pricing');
 // Route::get('lock', 'PageController@lock')->name('page.lock');
 
@@ -98,6 +97,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/eliminacion/tipo/{id}', 'destroy')->name('tipo.delete');
     });
 
+    Route::controller('IngredientController')->group(function () {
+        Route::get('/{establishment_id}/ingredientes/', 'index')->name('ingredient.index');
+        Route::post('/{establishment_id}/ingredientes/store', 'store')->name('ingredient.store');
+        Route::put('/update/ingredientes/{id}', 'update')->name('ingredient.update');
+        Route::delete('/delete/ingredientes/{id}', 'destroy')->name('ingredient.delete');
+    });
+
     Route::resource('category', 'CategoryController', ['except' => ['show']]);
     Route::resource('tag', 'TagController', ['except' => ['show']]);
     Route::resource('item', 'ItemController', ['except' => ['show']]);
@@ -107,6 +113,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+
+
+    Route::get('home', 'HomeController@index')->name('home');
 
     Route::get('{page}', ['as' => 'page.index', 'uses' => 'PageController@index']);
 });
