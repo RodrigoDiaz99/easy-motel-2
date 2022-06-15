@@ -277,7 +277,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link " href="{{ route('product.index') }}">
+                            <a class="nav-link " href="{{ route('product.index', ['establishment_id' => $hotel->id]) }}">
                                 <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-bell-concierge"></i>
                                 </div>
@@ -351,7 +351,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link " href="{{ route('product.index') }}">
+                            <a class="nav-link " href="{{ route('product.index', ['establishment_id' => $motel->id]) }}">
                                 <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-bell-concierge"></i>
                                 </div>

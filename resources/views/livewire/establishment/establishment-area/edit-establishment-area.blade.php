@@ -9,8 +9,8 @@
 
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Editar Áreas de Establecimientos</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>            </div>
 
             <div class="d-flex justify-content-center align-items-center">
                 <div wire:loading wire:target='update'>

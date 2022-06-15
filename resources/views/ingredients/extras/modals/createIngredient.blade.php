@@ -4,8 +4,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Agregar un ingrediente</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>            </div>
             <div class="modal-body">
                 <form action="{{ route('ingredient.store', ['establishment_id' => $establishment_id]) }}" method="POST">
                     @csrf
@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <div class="input-group input-group-alternative mb-4">
                                 <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
-                                <input class="form-control" placeholder="500" type="numeric" id="quantity" name="quantity">
+                                <input class="form-control" placeholder="500" min="0" type="number" id="quantity" name="quantity">
                             </div>
                         </div>
                     </div>

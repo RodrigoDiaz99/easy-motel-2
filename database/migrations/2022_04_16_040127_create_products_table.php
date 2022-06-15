@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('path')->nullable();
+            $table->integer('type')->comment('1 = Preparado, 2 = Receta');
             $table->foreignId('establishments_id')->constrained();
             $table->foreignId('product_types_id')->constrained();
             $table->foreignId('user_created_at')->nullable()->constrained('users');

@@ -25,7 +25,6 @@ class ProductStore extends FormRequest
     {
         return [
             'name' => 'required',
-            'description' => 'required',
 
         ];
     }
@@ -33,7 +32,6 @@ class ProductStore extends FormRequest
     {
         return [
             'name.required' => 'El campo nombre no puede quedar vacio',
-            'description.required' => 'El campo descripcion no puede quedar vacio',
 
         ];
 

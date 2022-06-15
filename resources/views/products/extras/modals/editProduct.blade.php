@@ -1,35 +1,24 @@
-<div class="modal fade" id="editar-{{ $row->id }}" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="editar-{{ $row->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Agregar Producto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>            </div>
             <div class="modal-body">
                 <form action="{{ route('product.update', $row->id) }}" method="POST">
-                    {{-- <form  method="POST" id="form-product"> --}}
                     @csrf
                     {{ METHOD_FIELD('PUT') }}
-                    {{-- <div class="row">
-                        <div class="col-md-12">
-                            <label for="">Imagen del Producto</label>
-                            <div class="form-group">
-                                <div class="input-group input-group-alternative mb-4">
-                                    <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
-                                    <input class="form-control form-control-alternative" type="file" accept="image/png, image/jpeg, image/jpg" id="path" name="path">
-                                </div>
-                            </div>
-                        </div> --}}
+
 
                     <div class="col-md-12">
                         <label for="">Nombre Producto</label>
                         <div class="form-group">
                             <div class="input-group input-group-alternative mb-4">
                                 <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
-                                <input class="form-control form-control-alternative" value="{{ $row->name }}"
-                                    placeholder="Nombre tipo producto" type="text" id="name" name="name"
-                                    value="{{ $row->name }}">
+                                <input class="form-control form-control-alternative" value="{{ $row->name }}" placeholder="Nombre tipo producto" type="text"
+                                    id="name" name="name" value="{{ $row->name }}">
                             </div>
                         </div>
                     </div>
@@ -56,30 +45,14 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <label for="">Establishment</label>
-                    <select class="form-control" multiple name="establishments_id" id="establishments_id">
-                        @foreach ($row->establishment as $esta)
-                        <option value="{{ $esta->id}}" selected>{{ $esta->name }}</option>
-                        @endforeach
 
-                        {{-- @foreach ($row->establishment as $r)
-                                <option value="{{$r->id}}">{{$r->name}}</option>
-                                @endforeach --}}
-                        @foreach ($establishments as $row)
-                            <option value="{{ $row->id }}">{{ $row->name }}</option>
-                        @endforeach
-
-                    </select>
-                </div>
 
                 <div class="col-md-6">
                     <label for="">Descripción</label>
                     <div class="form-group">
                         <div class="input-group input-group-alternative mb-4">
                             <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
-                            <textarea style="resize: none" class="form-control" name="description" id="description" cols="30" rows="4"
-                                placeholder="Descripcion producto"></textarea>
+                            <textarea style="resize: none" class="form-control" name="description" id="description" cols="30" rows="4" placeholder="Descripcion producto"></textarea>
                         </div>
                     </div>
                 </div>

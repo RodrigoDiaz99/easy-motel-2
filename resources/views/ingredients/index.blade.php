@@ -71,6 +71,7 @@
 
                                                             </div>
                                                         </td>
+
                                                     </tr>
                                                 @endforeach
 
@@ -94,6 +95,15 @@
 
 @section('scripts')
     <script>
+        function dontAllowNegative(value) {
+            if (value < 0) {
+                value = 0;
+            }
+
+
+            return value;
+        }
+
         $(function() {
             $('#editIngredient').on('show.bs.modal', function(e) {
                 var button = $(e.relatedTarget);

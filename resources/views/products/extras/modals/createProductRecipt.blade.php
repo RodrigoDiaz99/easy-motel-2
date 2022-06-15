@@ -1,14 +1,16 @@
-<div class="modal fade" id="addProduct" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="addProductRecipt" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Agregar Producto (preparado)</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="staticBackdropLabel">Agregar Producto (receta)<h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('product.store', ['establishment_id' => $establishment_id]) }}" method="POST">
+                <form action="{{ route('product.storeRecipt', ['establishment_id' => $establishment_id]) }}" method="POST">
                     @csrf
+
 
                     <div class="col-md-12">
                         <label for="">Nombre Producto</label>
@@ -45,6 +47,29 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-12">
+                        <label for="">Ingredientes</label>
+
+                        <div class="form-group" id="ingredients">
+                            <div class="input-group input-group-alternative mb-4" id="recipt">
+                                <select class="form-control" name="currentRecipt[0]" id="currentRecipt[0]">
+                                    <option value="">SELECCIONE TIPO</option>
+                                    @foreach ($ingredients as $row)
+                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                    @endforeach
+                                </select>
+                                <input class="form-control" placeholder="Cantidad" type="text" id="usedQuantity[0]" name="usedQuantity[0]">
+                                <input class="form-control" placeholder="Disponible" type="text" id="availableQuantity[0]" name="availableQuantity[0]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+
+                        <a class="btn btn-success" id="addIngredient"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </a>
+
+                    </div>
             </div>
 
             <div class="modal-footer">
@@ -55,5 +80,4 @@
         </div>
 
     </div>
-</div>
 </div>

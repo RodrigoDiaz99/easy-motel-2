@@ -37,18 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('establishments.rooms', 'RoomController')->only('index', 'create', 'edit');
     Route::resource('establishments.rooms.shellies', 'ShellyController')->only('index', 'create', 'edit');
 
-    /**
-     * Product Routes
-     */
-    Route::controller('ProductController')->group(function () {
-        Route::get('/product/index', 'index')->name('product.index');
-        Route::post('/product', 'store')->name('product.store');
-        Route::get('/product/create', 'create')->name('product.create');
-        Route::get('/product/{id}', 'show')->name('product.show');
-        Route::put('/product/{id}', 'update')->name('product.update');
-        Route::delete('/product/{id}', 'destroy')->name('product.delete');
-        Route::get('/product/{id}/edit', 'edit')->name('product.edit');
-    });
+
 
     /**
      * Inventory Routes
@@ -89,6 +78,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/reservationDesk/{id}', 'delete')->name('ReservationDesk.delete');
         Route::get('/reservationDesk/{id}/edit', 'edit')->name('ReservationDesk.edit');
     });
+    /**
+     * Product Routes
+     */
+    Route::controller('ProductController')->group(function () {
+        Route::get('/product/{establishment_id}/', 'index')->name('product.index');
+        Route::post('/product/{establishment_id}/store', 'store')->name('product.store');
+        Route::get('/product/{establishment_id}/create', 'create')->name('product.create');
+        Route::put('/product/{id}/update', 'update')->name('product.update');
+        Route::delete('/product/{id}/update', 'destroy')->name('product.delete');
+        Route::get('/product/{id}/edit/update', 'edit')->name('product.edit');
+        Route::post('/{establishment_id}/productRecipt', 'storeRecipt')->name('product.storeRecipt');
+    });
 
     Route::controller('TypeProductController')->group(function () {
         Route::get('/tipo', 'index')->name('tipo.index');
@@ -98,10 +99,10 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::controller('IngredientController')->group(function () {
-        Route::get('/{establishment_id}/ingredientes/', 'index')->name('ingredient.index');
-        Route::post('/{establishment_id}/ingredientes/store', 'store')->name('ingredient.store');
-        Route::put('/update/ingredientes/{id}', 'update')->name('ingredient.update');
-        Route::delete('/delete/ingredientes/{id}', 'destroy')->name('ingredient.delete');
+        Route::get('/ingredientes/{establishment_id}/', 'index')->name('ingredient.index');
+        Route::post('/ingredientes/{establishment_id}/store', 'store')->name('ingredient.store');
+        Route::put('/ingredientes/{id}/update', 'update')->name('ingredient.update');
+        Route::delete('/ingredientes/{id}/destroy', 'destroy')->name('ingredient.delete');
     });
 
     Route::resource('category', 'CategoryController', ['except' => ['show']]);

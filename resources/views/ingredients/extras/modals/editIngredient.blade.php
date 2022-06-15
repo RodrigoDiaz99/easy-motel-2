@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <div class="input-group input-group-alternative mb-4">
                                 <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
-                                <input class="form-control" placeholder="500" type="numeric" id="edit_quantity" name="edit_quantity">
+                                <input class="form-control" placeholder="500" type="number" id="edit_quantity" name="edit_quantity">
                             </div>
                         </div>
                     </div>

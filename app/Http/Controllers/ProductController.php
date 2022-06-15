@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStore;
-use App\Models\Establishment;
 use App\Models\Product;
 use App\Models\Product_inventory;
 use App\Models\Product_type;
-use App\Models\User;
+use App\Models\Ingredient;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +18,14 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($establishment_id)
     {
-        $establishments = Establishment::orderBy('id', 'asc')->get();
         $producttype = Product_type::orderBy('id', 'asc')->get();
         $productinventory = Product_inventory::orderBy('id', 'asc')->get();
         $producto = Product::orderBy('id', 'asc')->get();
-        return view('products.index', compact('establishments', 'producttype', 'productinventory', 'producto'));
+        $ingredients = Ingredient::where('establishment_id', $establishment_id)->get();
+
+        return view('products.index', compact('establishment_id', 'producttype', 'productinventory', 'producto', 'ingredients'));
     }
 
     /**
@@ -33,13 +33,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $establishments = Establishment::orderBy('id', 'ASC')->get();
-        // $producttype= ProductType::orderBy('id','asc')->get();
-        // $productinventory =ProductInventory::orderBy('id','asc')->get();
 
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,24 +41,43 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductStore $request)
+    public function store(ProductStore $request, $establishment_id)
     {
         try {
             $producto = new Product();
             $producto->name = $request->name;
-           $producto->description = $request->description;
-            $producto->establishments_id = $request->establishments_id;
-
+            $producto->description = $request->description;
+            $producto->type = 1;
+            $producto->establishments_id = $establishment_id;
             $producto->product_types_id = $request->product_types_id;
-            $producto->user_created_at = Auth::user()->id;
-            $producto->user_updated_at = Auth::user()->id;
             $producto->save();
-            return redirect()->route('product.index')->with('success', 'Se ha registrado nuevo producto');
+            return back()->with('success', 'Se ha registrado nuevo producto');
         } catch (\Throwable $th) {
-           // return back()->with('error', 'No se pudo crear el registro');
-           throw new Exception($th->getMessage());
+            throw new Exception($th->getMessage());
         }
+    }
 
+    public function storeRecipt(ProductStore $request, $establishment_id)
+    {
+        try {
+            $producto = new Product();
+            $producto->name = $request->name;
+            $producto->description = $request->description;
+            $producto->type = 2;
+            $producto->establishments_id = $establishment_id;
+            $producto->product_types_id = $request->product_types_id;
+            $quantity_array = $request->usedQuantity;
+            $ingredients_array = $request->currentRecipt;
+            $producto->save();
+
+            foreach ($ingredients_array as  $i => $row) {
+                $producto->ingredients()->attach($row, ['quantity' => $quantity_array[$i]]);
+
+            }
+            return back()->with('success', 'Se ha registrado nuevo producto');
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     /**
@@ -101,17 +114,14 @@ class ProductController extends Controller
         try {
             $producto = Product::findOrFail($id);
             $producto->name = $request->name;
-         //   $producto->description = $request->description;
             $producto->establishments_id = $request->establishments_id;
-
             $producto->product_types_id = $request->product_types_id;
-           // $producto->user_created_at = Auth::user()->id;
             $producto->user_updated_at = Auth::user()->id;
             $producto->update();
             return back()->with('updated', 'Se ha modificado el producto');
         } catch (\Throwable $th) {
-           // return back()->with('error', 'No se pudo crear el registro');
-           return response()->json($producto);
+            return back()->with('error', 'No se pudo crear el registro');
+            return response()->json($producto);
         }
     }
 
@@ -127,10 +137,9 @@ class ProductController extends Controller
             $producto = Product::find($id);
 
             $producto->delete();
-            return back()->with('deleted','Se elimino correctamente el registro',$id);
+            return back()->with('deleted', 'Se elimino correctamente el registro', $id);
         } catch (\Throwable $th) {
-          return back()->with('error','No se puede eliminar, probablemente esta relacionado con algun otro dato');
+            return back()->with('error', 'No se puede eliminar, probablemente esta relacionado con algun otro dato');
         }
-
     }
 }

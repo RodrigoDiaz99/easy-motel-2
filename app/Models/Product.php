@@ -33,12 +33,9 @@ class Product extends Model
     {
         return $this->hasMany(Product_type::class, 'id');
     }
-    public function establishment()
+
+    public function ingredients()
     {
-        return $this->hasMany(Establishment::class, 'id');
-    }
-    public function ingredient()
-    {
-        return $this->hasMany(Ingredient::class);
+        return $this->belongsToMany(Ingredient::class);
     }
 }

@@ -46,8 +46,7 @@ class IngredientController extends Controller
             $ingredient->save();
             return back()->with('success', '¡Se agrego el ingrediente de forma exitosa!');
         } catch (\Throwable $th) {
-            dd($th);
-            return back()->with('error', 'Hubo un error al agregar los datos. Contacta con un administrador del sistema.');
+             return back()->with('error', 'Hubo un error al agregar los datos. Contacta con un administrador del sistema.');
         }
     }
 
