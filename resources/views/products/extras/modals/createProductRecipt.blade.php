@@ -52,22 +52,24 @@
                         <label for="">Ingredientes</label>
 
                         <div class="form-group" id="ingredients">
-                            <div class="input-group input-group-alternative mb-4" id="recipt">
-                                <select class="form-control" name="currentRecipt[0]" id="currentRecipt[0]">
+                            <div class="recipt input-group input-group-alternative mb-4" id="recipt">
+                                <select class="form-control" index='0' name="currentRecipt[]" id="currentRecipt[]">
                                     <option value="">SELECCIONE TIPO</option>
                                     @foreach ($ingredients as $row)
                                         <option value="{{ $row->id }}">{{ $row->name }}</option>
                                     @endforeach
                                 </select>
-                                <input class="form-control" placeholder="Cantidad" type="text" id="usedQuantity[0]" name="usedQuantity[0]">
-                                <input class="form-control" placeholder="Disponible" type="text" id="availableQuantity[0]" name="availableQuantity[0]">
-                            </div>
+                                <input class="form-control" placeholder="Cantidad" type="text" id="usedQuantity[]" name="usedQuantity[]">
+                                <input class="form-control" placeholder="Disponible" type="text" id="availableQuantity[]" name="availableQuantity[]">
+                                <button type="button" class="btn btn-danger" disabled><i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                </button> </div>
                         </div>
                     </div>
                     <div class="col-md-12">
 
-                        <a class="btn btn-success" id="addIngredient"><i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        </a>
+                        <button type="button" class="btn btn-success" id="addIngredient"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+
 
                     </div>
             </div>

@@ -1,8 +1,8 @@
 @if (Session::has('deleted'))
     <script>
         swal.fire({
-            icon: 'error',
-            title: 'Eliminado...',
+            icon: 'success',
+            title: 'Eliminado',
             text: "{{Session::get('deleted')}}",
             confirmButtonText: 'Cerrar'
         })

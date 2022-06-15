@@ -66,17 +66,24 @@ class ProductController extends Controller
             $producto->type = 2;
             $producto->establishments_id = $establishment_id;
             $producto->product_types_id = $request->product_types_id;
-            $quantity_array = $request->usedQuantity;
-            $ingredients_array = $request->currentRecipt;
+            $quantity = $request->usedQuantity;
+            $ingredient_id = $request->currentRecipt;
             $producto->save();
+            for ($i = 0; $i < count($ingredient_id); $i++) {
+                $producto->ingredients()->attach($ingredient_id[$i], ['quantity' => $quantity[$i]]);
+                $ingredient = Ingredient::findOrFail($ingredient_id[$i]);
+                $ingredient_quantity = $ingredient->available_quantity;
+                $new_quantity = $ingredient_quantity - $quantity[$i];
 
-            foreach ($ingredients_array as  $i => $row) {
-                $producto->ingredients()->attach($row, ['quantity' => $quantity_array[$i]]);
-
+                if ($new_quantity < 0) {
+                    throw new Exception('Value cannot be less than zero.');
+                }
+                $ingredient->available_quantity = $new_quantity;
+                $ingredient->save();
             }
             return back()->with('success', 'Se ha registrado nuevo producto');
-        } catch (\Throwable $th) {
-            dd($th);
+        } catch (\Exception $th) {
+            return back()->with(['error' => 'Error al agregar el registro, por favor, contacte a un administrador del sistema.', 'code' => $th->getMessage()]);
         }
     }
 
@@ -135,11 +142,17 @@ class ProductController extends Controller
     {
         try {
             $producto = Product::find($id);
-
-            $producto->delete();
-            return back()->with('deleted', 'Se elimino correctamente el registro', $id);
+            if ($producto->type == '1') {
+                $producto->delete();
+                return back()->with('deleted', 'Se elimino correctamente el registro', $id);
+            } else if ($producto->type == '2') {
+                $producto->ingredients()->detach();
+                $producto->delete();
+                return back()->with('deleted', 'Se elimino correctamente el registro', $id);
+            }
         } catch (\Throwable $th) {
-            return back()->with('error', 'No se puede eliminar, probablemente esta relacionado con algun otro dato');
+            $exception = $th->getMessage();
+            return back()->with(['error' => 'No se pudo eliminar el registro, por favor, contacta a un administrado del sistema.', 'code' => $exception]);
         }
     }
 }

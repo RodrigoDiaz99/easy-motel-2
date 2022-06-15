@@ -6,5 +6,6 @@
             text: "{{Session::get('error')}}",
             confirmButtonText: 'Cerrar'
         })
+        console.log("{{Session::get('code')}}");
     </script>
 @endif
