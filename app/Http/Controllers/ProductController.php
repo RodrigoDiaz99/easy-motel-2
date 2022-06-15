@@ -57,7 +57,7 @@ class ProductController extends Controller
         }
     }
 
-    public function storeRecipt(ProductStore $request, $establishment_id)
+    public function storeRecipe(ProductStore $request, $establishment_id)
     {
         try {
             $producto = new Product();
@@ -67,7 +67,7 @@ class ProductController extends Controller
             $producto->establishments_id = $establishment_id;
             $producto->product_types_id = $request->product_types_id;
             $quantity = $request->usedQuantity;
-            $ingredient_id = $request->currentRecipt;
+            $ingredient_id = $request->currentRecipe;
             $producto->save();
             for ($i = 0; $i < count($ingredient_id); $i++) {
                 $producto->ingredients()->attach($ingredient_id[$i], ['quantity' => $quantity[$i]]);

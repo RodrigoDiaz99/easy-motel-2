@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-icon btn-primary d-flex align-items-center" data-toggle="modal" data-target="#addProductRecipt">
+                <a href="#" class="btn btn-icon btn-primary d-flex align-items-center" data-toggle="modal" data-target="#addProductRecipe">
                     <span class="btn-inner--text">Receta</span>
                 </a>
                 <a href="#" class="btn btn-icon btn-primary d-flex align-items-center" data-toggle="modal" data-target="#addProduct">

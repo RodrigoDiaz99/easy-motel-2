@@ -1,4 +1,4 @@
-<div class="modal fade" id="addProductRecipt" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+<div class="modal fade" id="addProductRecipe" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -8,7 +8,7 @@
                         </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('product.storeRecipt', ['establishment_id' => $establishment_id]) }}" method="POST">
+                <form action="{{ route('product.storeRecipe', ['establishment_id' => $establishment_id]) }}" method="POST">
                     @csrf
 
 
@@ -52,8 +52,8 @@
                         <label for="">Ingredientes</label>
 
                         <div class="form-group" id="ingredients">
-                            <div class="recipt input-group input-group-alternative mb-4" id="recipt">
-                                <select class="form-control" index='0' name="currentRecipt[]" id="currentRecipt[]">
+                            <div class="recipe input-group input-group-alternative mb-4" id="recipe">
+                                <select class="form-control" index='0' name="currentRecipe[]" id="currentRecipe[]">
                                     <option value="">SELECCIONE TIPO</option>
                                     @foreach ($ingredients as $row)
                                         <option value="{{ $row->id }}">{{ $row->name }}</option>
