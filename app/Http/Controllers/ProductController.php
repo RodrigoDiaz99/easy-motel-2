@@ -121,14 +121,14 @@ class ProductController extends Controller
         try {
             $producto = Product::findOrFail($id);
             $producto->name = $request->name;
-            $producto->establishments_id = $request->establishments_id;
             $producto->product_types_id = $request->product_types_id;
+            $producto->description = $request->description;
             $producto->user_updated_at = Auth::user()->id;
-            $producto->update();
+            $producto->save();
             return back()->with('updated', 'Se ha modificado el producto');
-        } catch (\Throwable $th) {
+        } catch (\Exception $th) {
+            dd($th);
             return back()->with('error', 'No se pudo crear el registro');
-            return response()->json($producto);
         }
     }
 

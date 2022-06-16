@@ -10,14 +10,14 @@
             <div class="modal-body">
                 <form class="editProductForm" name="#editProductForm" action="#" method="POST">
                     @csrf
-
+                    @method('put')
                     <div class="col-md-12">
                         <label for="">Nombre Producto</label>
                         <div class="form-group">
                             <div class="input-group input-group-alternative mb-4">
                                 <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                                 <input class="edit_name form-control form-control-alternative" placeholder="Nombre tipo producto" type="text" id="name"
-                                    name="edit_name">
+                                    name="name">
                             </div>
                         </div>
                     </div>
@@ -42,8 +42,8 @@
                         <div class="form-group">
                             <div class="input-group input-group-alternative mb-4">
                                 <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
-                                <input class="edit_description form-control form-control-alternative" placeholder="Nombre tipo producto" type="text" id="edit_description"
-                                    name="description">
+                                <input class="edit_description form-control form-control-alternative" placeholder="Nombre tipo producto" type="text"
+                                    id="edit_description" name="description">
                             </div>
                         </div>
                     </div>

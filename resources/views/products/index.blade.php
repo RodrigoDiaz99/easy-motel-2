@@ -69,29 +69,30 @@
 
                                                         <td>
                                                             @forelse ($row->ingredients as $row_ingredients)
-                                                                <h6 class="text-sm">{{ $row_ingredients->name }} -
-                                                                    {{ $row_ingredients->pivot->quantity }}g</h6>
+                                                                 <h6 class="text-sm">{{ $row_ingredients->name }} -
+                                                                    {{ $row_ingredients->pivot->quantity }}g
+                                                                </h6>
                                                             @empty
                                                                 <h6 class="text-sm">No aplica</h6>
                                                             @endforelse
-                                                        </td>
+                                                         </td>
 
                                                         <td>
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     @if ($row->type == 1)
-                                                                        <button type="button" class="btn btn-icon btn-success" data-toggle="modal"
+                                                                        <button type="button" class="btn btn-icon btn-warning" data-toggle="modal"
                                                                             data-target="#editProduct" data-name={{ $row->name }}
-                                                                            data-url={{ route('product.update', $row->id) }} data-id={{ $row->id }}
+                                                                            data-url="{{ route('product.update', $row->id) }}" data-id={{ $row->id }}
                                                                             data-name={{ $row->name }} data-type_id={{ $row->product_types_id }}
                                                                             data-description={{ $row->description }} data-type={{ $row->type }}
                                                                             title="Editar prodicto"><i class="fas fa-edit"></i>reguñar</button>
                                                                     @elseif($row->type == 2)
-                                                                        <button type="button" class="btn btn-icon btn-success" data-toggle="modal"
+                                                                        <button type="button" class="btn btn-icon btn-warning" data-toggle="modal"
                                                                             data-target="#editProductRecipe" data-name={{ $row->name }}
-                                                                            data-url={{ route('product.update', $row->id) }} data-id={{ $row->id }}
+                                                                            data-url="{{ route('product.update', $row->id) }}" data-id={{ $row->id }}
                                                                             data-name={{ $row->name }} data-type_id={{ $row->product_types_id }}
-                                                                            data-description={{ $row->description }} data-type={{ $row->type }}
+                                                                            data-description={{ $row->description }} data-type={{ $row->type }} data-array={{$row->ingredients}}
                                                                             title="Editar prodicto"><i class="fas fa-edit"></i>recipt</button>
                                                                     @endif
                                                                 </div>
@@ -101,7 +102,7 @@
                                                                     <form action="{{ route('product.delete', $row->id) }}" method="post">
                                                                         @csrf
                                                                         @method('DELETE')
-                                                                        <button type="submit" class="btn btn-icon btn-success"><i class="fas fa-trash"></i>
+                                                                        <button type="submit" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i>
                                                                         </button>
                                                                     </form>
 
@@ -146,6 +147,21 @@
             $('.edit_product_type').val(button.data('type_id'));
             $('.edit_description').val(button.data('description'));
         });
+
+        $('#editProductRecipe').on('show.bs.modal', function(e) {
+            var button = $(e.relatedTarget);
+            var ingredients = @json($ingredients); /* Arreglo de ingredientes */
+
+            alert(ingredients)
+            var button_url = button.data('url');
+            var button_name = button.data('name')
+            var button_type_id = button.data('type_id');
+            $('.editProductForm').attr('action', button.data('url'));
+            $('.edit_name').val(button.data('name'));
+            $('.edit_product_type').val(button.data('type_id'));
+            $('.edit_description').val(button.data('description'));
+        });
+
 
         var count = 1;
         var ingredients = @json($ingredients); /* Arreglo de ingredientes */
