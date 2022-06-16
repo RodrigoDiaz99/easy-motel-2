@@ -28,6 +28,23 @@ class ProductController extends Controller
         return view('products.index', compact('establishments', 'producttype', 'productinventory', 'producto'));
     }
 
+    public function gridProductos(Request $request)
+    {
+
+        try {
+
+            $lstProductos = Product::join('establishment', 'Product.establishment_id', '=', 'establishment.id')
+                ->join('product_types','Product.product_types_id','=','product_type.id')
+                ->select('Product.id', 'Product.name', 'Product.type','establishment.name','product_types.name','Product.user_created_at' )
+
+                ->get();
+
+            return $lstProductos;
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+            return null;
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -52,7 +69,7 @@ class ProductController extends Controller
         try {
             $producto = new Product();
             $producto->name = $request->name;
-           $producto->description = $request->description;
+            $producto->description = $request->description;
             $producto->establishments_id = $request->establishments_id;
 
             $producto->product_types_id = $request->product_types_id;
@@ -61,8 +78,8 @@ class ProductController extends Controller
             $producto->save();
             return redirect()->route('product.index')->with('success', 'Se ha registrado nuevo producto');
         } catch (\Throwable $th) {
-           // return back()->with('error', 'No se pudo crear el registro');
-           throw new Exception($th->getMessage());
+            // return back()->with('error', 'No se pudo crear el registro');
+            throw new Exception($th->getMessage());
         }
 
     }
@@ -101,17 +118,17 @@ class ProductController extends Controller
         try {
             $producto = Product::findOrFail($id);
             $producto->name = $request->name;
-         //   $producto->description = $request->description;
+            //   $producto->description = $request->description;
             $producto->establishments_id = $request->establishments_id;
 
             $producto->product_types_id = $request->product_types_id;
-           // $producto->user_created_at = Auth::user()->id;
+            // $producto->user_created_at = Auth::user()->id;
             $producto->user_updated_at = Auth::user()->id;
             $producto->update();
             return back()->with('updated', 'Se ha modificado el producto');
         } catch (\Throwable $th) {
-           // return back()->with('error', 'No se pudo crear el registro');
-           return response()->json($producto);
+            // return back()->with('error', 'No se pudo crear el registro');
+            return response()->json($producto);
         }
     }
 
@@ -127,9 +144,9 @@ class ProductController extends Controller
             $producto = Product::find($id);
 
             $producto->delete();
-            return back()->with('deleted','Se elimino correctamente el registro',$id);
+            return back()->with('deleted', 'Se elimino correctamente el registro', $id);
         } catch (\Throwable $th) {
-          return back()->with('error','No se puede eliminar, probablemente esta relacionado con algun otro dato');
+            return back()->with('error', 'No se puede eliminar, probablemente esta relacionado con algun otro dato');
         }
 
     }

@@ -48,8 +48,8 @@
                             <div class="card mb-4">
                                 <div class="card-body px-0 pt-0 pb-2">
                                     <div class="table-responsive p-0">
-                                        <table class="table align-items-center mb-0">
-                                            <thead>
+                                        <table class="table align-items-center mb-0" id="gridProductos">
+                                            {{-- <thead>
                                                 <tr>
                                                     <th>Nombre Producto</th>
                                                     <th>Descripción</th>
@@ -112,7 +112,7 @@
                                                     </tr>
                                                 @endforeach
 
-                                            </tbody>
+                                            </tbody> --}}
                                         </table>
                                     </div>
                                 </div>
@@ -135,6 +135,11 @@
 
 
 @section('scripts')
+<script>
+    let ruta_list="{{route('product.list')}}"
+</script>
+<script src="{{asset('js/productos/producto.js')}}"></script>
+
     <script>
         $('#editProduct').on('show.bs.modal', function(e) {
             var button = $(e.relatedTarget);

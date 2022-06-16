@@ -48,7 +48,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Cancelar</button>
+
                 <button type="submit" class="btn btn-success"><strong>GUARDAR</strong></button>
             </div>
             </form>
