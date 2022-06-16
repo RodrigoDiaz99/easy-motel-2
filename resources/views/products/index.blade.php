@@ -49,7 +49,7 @@
                                 <div class="card-body px-0 pt-0 pb-2">
                                     <div class="table-responsive p-0">
                                         <table class="table align-items-center mb-0" id="gridProductos">
-                                            {{-- <thead>
+                                           {{--  <thead>
                                                 <tr>
                                                     <th>Nombre Producto</th>
                                                     <th>Descripción</th>
@@ -69,36 +69,29 @@
 
                                                         <td>
                                                             @forelse ($row->ingredients as $row_ingredients)
-                                                                 <h6 class="text-sm">{{ $row_ingredients->name }} -
+                                                                <h6 class="text-sm">{{ $row_ingredients->name }} -
                                                                     {{ $row_ingredients->pivot->quantity }}g
                                                                 </h6>
                                                             @empty
                                                                 <h6 class="text-sm">No aplica</h6>
                                                             @endforelse
-                                                         </td>
+                                                        </td>
 
                                                         <td>
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     @if ($row->type == 1)
-                                                                        <button type="button" class="btn btn-icon btn-warning" data-toggle="modal"
-                                                                            data-target="#editProduct" data-name={{ $row->name }}
-                                                                            data-url="{{ route('product.update', $row->id) }}" data-id={{ $row->id }}
-                                                                            data-name={{ $row->name }} data-type_id={{ $row->product_types_id }}
-                                                                            data-description={{ $row->description }} data-type={{ $row->type }}
-                                                                            title="Editar prodicto"><i class="fas fa-edit"></i>reguñar</button>
+                                                                        <button type="button" class="edit_row btn btn-icon btn-warning" data-id={{ $row->id }}
+                                                                            data-toggle="modal" data-target="#editProduct" title="Editar prodicto"><i
+                                                                                class="fas fa-edit"></i> (Preparado)</button>
                                                                     @elseif($row->type == 2)
                                                                         <button type="button" class="btn btn-icon btn-warning" data-toggle="modal"
-                                                                            data-target="#editProductRecipe" data-name={{ $row->name }}
-                                                                            data-url="{{ route('product.update', $row->id) }}" data-id={{ $row->id }}
-                                                                            data-name={{ $row->name }} data-type_id={{ $row->product_types_id }}
-                                                                            data-description={{ $row->description }} data-type={{ $row->type }} data-array={{$row->ingredients}}
-                                                                            title="Editar prodicto"><i class="fas fa-edit"></i>recipt</button>
+                                                                            data-target="#editProductRecipe" title="Editar prodicto"><i
+                                                                                class="fas fa-edit"></i>(Receta)</button>
                                                                     @endif
                                                                 </div>
 
                                                                 <div class="col-md-6">
-
                                                                     <form action="{{ route('product.delete', $row->id) }}" method="post">
                                                                         @csrf
                                                                         @method('DELETE')
@@ -136,121 +129,12 @@
 
 
 @section('scripts')
-<script>
-    let ruta_list="{{route('product.list')}}"
-</script>
-<script src="{{asset('js/productos/producto.js')}}"></script>
-
     <script>
-        $('#editProduct').on('show.bs.modal', function(e) {
-            var button = $(e.relatedTarget);
-            var button_url = button.data('url');
-            var button_name = button.data('name')
-            var button_type_id = button.data('type_id');
-            $('.editProductForm').attr('action', button.data('url'));
-            $('.edit_name').val(button.data('name'));
-            $('.edit_product_type').val(button.data('type_id'));
-            $('.edit_description').val(button.data('description'));
-        });
-
-        $('#editProductRecipe').on('show.bs.modal', function(e) {
-            var button = $(e.relatedTarget);
-            var ingredients = @json($ingredients); /* Arreglo de ingredientes */
-
-            alert(ingredients)
-            var button_url = button.data('url');
-            var button_name = button.data('name')
-            var button_type_id = button.data('type_id');
-            $('.editProductForm').attr('action', button.data('url'));
-            $('.edit_name').val(button.data('name'));
-            $('.edit_product_type').val(button.data('type_id'));
-            $('.edit_description').val(button.data('description'));
-        });
-
-
-        var count = 1;
-        var ingredients = @json($ingredients); /* Arreglo de ingredientes */
-
-        /* Script para cargar datos al cambiar de selección en input */
-        $('#ingredients').on('change', 'select[name^="currentRecipe"]', function() {
-
-            var ingredient_id = $(this).val() - 1;
-            if (ingredient_id >= 0) {
-                var available_quantity = ingredients[ingredient_id]['available_quantity'];
-                $(this).parent().find('input[name^="availableQuantity"]').val(available_quantity);
-                $(this).parent().find('input[name^="originalQuantity"]').val(available_quantity);
-
-            }
-        });
-
-        /* $('#ingredients').on('input propertychange', 'input[name^="usedQuantity"]', function() {
-
-            var ingredient_id = $(this).parent().find('select[name^="currentRecipe"]').val() - 1;
-            if (ingredient_id >= 0) {
-                var available_quantity =  $(this).parent().find('input[name^="originalQuantity"]').val();
-                var used_quantity = $(this).parent().find('input[name^="usedQuantity"]').val();
-                var new_available_quantity = available_quantity - used_quantity;
-                ingredients[ingredient_id]['available_quantity'] = new_available_quantity;
-                $(this).parent().find('input[name^="availableQuantity"]').val(new_available_quantity)
-
-                if (used_quantity > available_quantity) {
-
-                    $(this).parent().find('input[name^="usedQuantity"]').val(available_quantity);
-                    $(this).parent().find('input[name^="availableQuantity"]').val(0)
-                }
-            }
-        }); */
-
-        /* Agregar nueva fila de ingrediente */
-
-
-        $('#addIngredient').on('click', function() {
-            var new_input = '';
-            new_input += '<div class="recipt input-group input-group-alternative mb-4" id="recipt">';
-            new_input += '<select class="form-control" name="currentRecipe[]" id="currentRecipe[]">';
-            new_input += '<option value="">SELECCIONE TIPO</option>@foreach ($ingredients as $row)<option value="{{ $row->id }}">{{ $row->name }}</option>@endforeach </select>';
-            new_input += '<input class="form-control" placeholder="Cantidad" type="text" id="usedQuantity[]" name="usedQuantity[]">';
-            new_input += '<input class="form-control" placeholder="Disponible" type="text" id="availableQuantity[]" name="availableQuantity[]">';
-            new_input += '<button type="button" class="removeIngredient btn btn-danger" id="removeIngredient[]"><i class="fa fa-minus-circle" aria-hidden="true"></i></button> </div>';
-            $('#ingredients').append(new_input);
-
-        });
-        $('#ingredients').on('click', '.removeIngredient', function() {
-            $(this).parent().remove();
-        });
-        /* Mostrar SWAL cuando no hay ningún tipo de producto. */
-        function noProductType() {
-            swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: "Debes agregar un 'Tipo de producto' antes para poder agregar un producto.",
-                confirmButtonText: 'Cerrar'
-            })
-        }
-
-        /* Prueba de AJAX, aun no funciona */
-        $('.delete_row').on('click', function() {
-            var the_route = $(this).data('url');
-            swal.fire({
-                title: '¿Estás seguro?',
-                text: "Esta acción es irreversible",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'No, cancelar.'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    swal.fire({
-                        title: 'Eliminando...',
-                        text: 'Espere un momento',
-                        icon: 'info',
-                        showConfirmButton: false
-                    })
-                }
-            })
-
-        })
+        var url_product_edit = "{{ route('product.edit') }}"
+        var url_product_update = "{{ route('product.update') }}"
+        var token = '{{ csrf_token() }}'
+        let ruta_list = "{{ route('product.list') }}"
     </script>
+    <script src="{{ asset('js/productos/producto.js') }}"></script>
+    <script></script>
 @endsection

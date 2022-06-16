@@ -82,13 +82,15 @@ Route::group(['middleware' => 'auth'], function () {
      * Product Routes
      */
     Route::controller('ProductController')->group(function () {
+
         Route::get('/product/{establishment_id}/', 'index')->name('product.index');
         Route::post('/product/list/', 'gridProductos')->name('product.list');
         Route::post('/product/{establishment_id}/store', 'store')->name('product.store');
         Route::get('/product/{establishment_id}/create', 'create')->name('product.create');
-        Route::put('/product/{id}/update', 'update')->name('product.update');
+        Route::put('/product/update/product/', 'update')->name('product.update');
         Route::delete('/product/{id}/destroy', 'destroy')->name('product.delete');
-        Route::get('/product/{id}/edit/update', 'edit')->name('product.edit');
+        Route::get('/product/edit/id', 'edit')->name('product.edit');
+
         Route::post('/{establishment_id}/productRecipe', 'storeRecipe')->name('product.storeRecipe');
     });
 

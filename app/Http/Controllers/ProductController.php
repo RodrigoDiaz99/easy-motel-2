@@ -10,6 +10,7 @@ use App\Models\Ingredient;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -33,8 +34,8 @@ class ProductController extends Controller
         try {
 
             $lstProductos = Product::join('establishment', 'Product.establishment_id', '=', 'establishment.id')
-                ->join('product_types','Product.product_types_id','=','product_type.id')
-                ->select('Product.id', 'Product.name', 'Product.type','establishment.name','product_types.name','Product.user_created_at' )
+                ->join('product_types', 'Product.product_types_id', '=', 'product_type.id')
+                ->select('Product.id', 'Product.name', 'Product.type', 'establishment.name', 'product_types.name', 'Product.user_created_at')
 
                 ->get();
 
@@ -120,10 +121,20 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
-    }
+        $producto = Product::find($request->id);
+        if (!$producto) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error',
+                'query' => $request->id
+            ], 404);
+        }
+
+        return response()->json($producto);
+
+        }
 
     /**
      * Update the specified resource in storage.
@@ -132,16 +143,18 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         try {
-            $producto = Product::findOrFail($id);
+            $producto = Product::findOrFail($request->id);
             $producto->name = $request->name;
             $producto->product_types_id = $request->product_types_id;
             $producto->description = $request->description;
             $producto->user_updated_at = Auth::user()->id;
             $producto->save();
             return back()->with('updated', 'Se ha modificado el producto');
+            return response()->json($producto);
+
         } catch (\Exception $th) {
             dd($th);
             return back()->with('error', 'No se pudo crear el registro');

@@ -103,7 +103,14 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $producto = Product::findOrFail($id);
+            return response()->json($producto);
+        } catch (\Exception $th) {
+            dd($th);
+            return back()->with('error', 'No se pudo crear el registro');
+            return response()->json($producto);
+        }
     }
 
     /**
