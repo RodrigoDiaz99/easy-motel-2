@@ -27,7 +27,23 @@ class ProductController extends Controller
 
         return view('products.index', compact('establishment_id', 'producttype', 'productinventory', 'producto', 'ingredients'));
     }
+    public function gridProductos(Request $request)
+    {
 
+        try {
+
+            $lstProductos = Product::join('establishment', 'Product.establishment_id', '=', 'establishment.id')
+                ->join('product_types','Product.product_types_id','=','product_type.id')
+                ->select('Product.id', 'Product.name', 'Product.type','establishment.name','product_types.name','Product.user_created_at' )
+
+                ->get();
+
+            return $lstProductos;
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+            return null;
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

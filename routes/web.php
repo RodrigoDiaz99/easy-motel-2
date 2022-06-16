@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::controller('ProductController')->group(function () {
         Route::get('/product/{establishment_id}/', 'index')->name('product.index');
+        Route::post('/product/list/', 'gridProductos')->name('product.list');
         Route::post('/product/{establishment_id}/store', 'store')->name('product.store');
         Route::get('/product/{establishment_id}/create', 'create')->name('product.create');
         Route::put('/product/{id}/update', 'update')->name('product.update');
