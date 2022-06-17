@@ -1,5 +1,4 @@
 $(function ($) {
-    console.log('hola');
     $.ajaxSetup({
         headers: { "X-CSRF-Token": $("meta[name=csrf-token]").attr("content") },
     });
@@ -9,7 +8,6 @@ $(function ($) {
         classes: "table-striped",
         method: "post",
         contentType: "application/x-www-form-urlencoded",
-
         pagination: true,
         pageSize: 10,
         columns: [
@@ -21,21 +19,20 @@ $(function ($) {
                 visible: false,
             },
             {
-                field: "Product.name",
+                field: "name",
                 title: "Nombre",
-                formatter: "NombreFormatter",
                 width: "26",
                 widthUnit: "%",
             },
             {
-                field: "cCorreo",
-                title: "Correo",
+                field: "description",
+                title: "Descripción",
                 width: "10",
                 widthUnit: "%",
             },
             {
-                field: "cTelefono",
-                title: "Telefono",
+                field: "ingredients",
+                title: "Ingredientes",
                 width: "10",
                 widthUnit: "%",
             },
@@ -45,27 +42,34 @@ $(function ($) {
                 formatter: "AprobadoFormatter",
                 width: "8",
                 widthUnit: "%",
+                visible: false,
+
             },
             {
                 field: "lActivo",
                 title: "",
                 formatter: "ActivoFormatter",
                 width: "6",
-                widthUnit: "%",
+                widthUnit: "%", visible: false,
+
             },
             {
                 field: "cedicion",
                 title: "",
                 formatter: "EditFormatter",
                 width: "20",
-                widthUnit: "%",
+                widthUnit: "%", visible: false,
+
             },
         ],
-        onLoadSuccess: function (data) { },
+        onLoadSuccess: function (data) {
+            console.log(data)
+        },
     });
 
     $("#gridValuadores").bootstrapTable("refresh");
 });
+
 var row_id = '';
 /* Cargar datos en modal al abrir */
 $('#editProduct').on('show.bs.modal', function (e) {
@@ -147,16 +151,7 @@ $('#ingredients').on('change', 'select[name^="currentRecipe"]', function () {
 });
 
 
-$('#addIngredient').on('click', function () {
-    var new_input = '';
-    new_input += '<div class="recipt input-group input-group-alternative mb-4" id="recipt">';
-    new_input += '<select class="form-control" name="currentRecipe[]" id="currentRecipe[]">';
-    new_input += '<option value="">SELECCIONE TIPO</option>@foreach ($ingredients as $row)<option value="{{ $row->id }}">{{ $row->name }}</option>@endforeach </select>';
-    new_input += '<input class="form-control" placeholder="Cantidad" type="text" id="usedQuantity[]" name="usedQuantity[]">';
-    new_input += '<input class="form-control" placeholder="Disponible" type="text" id="availableQuantity[]" name="availableQuantity[]">';
-    new_input += '<button type="button" class="removeIngredient btn btn-danger" id="removeIngredient[]"><i class="fa fa-minus-circle" aria-hidden="true"></i></button> </div>';
-    $('#ingredients').append(new_input);
-});
+
 $('#ingredients').on('click', '.removeIngredient', function () {
     $(this).parent().remove();
 });

@@ -120,10 +120,7 @@
 
 
 @section('scripts')
-    <script>
-        let ruta_index = "{{ route('product.index') }}"
-        let ruta_tipo = "{{ route('tipo.store') }}"
-    </script>
+
     <script src="{{ asset('js/productos/tipo_product.js') }}"></script>
 @endsection
 

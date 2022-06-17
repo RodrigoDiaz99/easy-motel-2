@@ -23,23 +23,17 @@ class ProductController extends Controller
     {
         $producttype = Product_type::orderBy('id', 'asc')->get();
         $productinventory = Product_inventory::orderBy('id', 'asc')->get();
-        $producto = Product::orderBy('id', 'asc')->get();
+        $producto = Product::orderBy('id', 'asc')->where('establishments_id', $establishment_id)->get();
         $ingredients = Ingredient::where('establishment_id', $establishment_id)->get();
 
         return view('products.index', compact('establishment_id', 'producttype', 'productinventory', 'producto', 'ingredients'));
     }
-    public function gridProductos(Request $request)
+    public function gridProductos($establishment_id)
     {
 
         try {
-
-            $lstProductos = Product::join('establishment', 'Product.establishment_id', '=', 'establishment.id')
-                ->join('product_types', 'Product.product_types_id', '=', 'product_type.id')
-                ->select('Product.id', 'Product.name', 'Product.type', 'establishment.name', 'product_types.name', 'Product.user_created_at')
-
-                ->get();
-
-            return $lstProductos;
+            $producto = Product::orderBy('id', 'asc')->where('establishments_id', $establishment_id)->get();
+            return $producto;
         } catch (Exception $ex) {
             echo $ex->getMessage();
             return null;
@@ -133,8 +127,7 @@ class ProductController extends Controller
         }
 
         return response()->json($producto);
-
-        }
+    }
 
     /**
      * Update the specified resource in storage.
@@ -154,7 +147,6 @@ class ProductController extends Controller
             $producto->save();
             return back()->with('updated', 'Se ha modificado el producto');
             return response()->json($producto);
-
         } catch (\Exception $th) {
             dd($th);
             return back()->with('error', 'No se pudo crear el registro');

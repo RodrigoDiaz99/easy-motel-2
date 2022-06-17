@@ -48,8 +48,8 @@
                             <div class="card mb-4">
                                 <div class="card-body px-0 pt-0 pb-2">
                                     <div class="table-responsive p-0">
-                                        <table class="table align-items-center mb-0" id="gridProductos">
-                                           {{--  <thead>
+                                        <table class="table align-items-center mb-0" id="gridProductoss">
+                                            <thead>
                                                 <tr>
                                                     <th>Nombre Producto</th>
                                                     <th>Descripción</th>
@@ -106,7 +106,7 @@
                                                     </tr>
                                                 @endforeach
 
-                                            </tbody> --}}
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -133,7 +133,18 @@
         var url_product_edit = "{{ route('product.edit') }}"
         var url_product_update = "{{ route('product.update') }}"
         var token = '{{ csrf_token() }}'
-        let ruta_list = "{{ route('product.list') }}"
+        let ruta_list = "{{ route('product.list', ['establishment_id' => $establishment_id]) }}"
+
+        $('#addIngredient').on('click', function () {
+    var new_input = '';
+    new_input += '<div class="recipt input-group input-group-alternative mb-4" id="recipt">';
+    new_input += '<select class="form-control" name="currentRecipe[]" id="currentRecipe[]">';
+    new_input += '<option value="">SELECCIONE TIPO</option>@foreach ($ingredients as $row)<option value="{{ $row->id }}">{{ $row->name }}</option>@endforeach </select>';
+    new_input += '<input class="form-control" placeholder="Cantidad" type="text" id="usedQuantity[]" name="usedQuantity[]">';
+/*     new_input += '<input class="form-control" placeholder="Disponible" type="text" id="availableQuantity[]" name="availableQuantity[]">';
+ */    new_input += '<button type="button" class="removeIngredient btn btn-danger" id="removeIngredient[]"><i class="fa fa-minus-circle" aria-hidden="true"></i></button> </div>';
+    $('#ingredients').append(new_input);
+});
     </script>
     <script src="{{ asset('js/productos/producto.js') }}"></script>
     <script></script>

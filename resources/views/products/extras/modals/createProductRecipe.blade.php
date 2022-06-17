@@ -60,8 +60,8 @@
                                     @endforeach
                                 </select>
                                 <input class="form-control" placeholder="Cantidad" type="text" id="usedQuantity[]" name="usedQuantity[]">
-                                <input class="form-control" placeholder="Disponible" type="text" id="availableQuantity[]" name="availableQuantity[]">
-                                <button type="button" class="btn btn-danger" disabled><i class="fa fa-minus-circle" aria-hidden="true"></i>
+{{--                                 <input class="form-control" placeholder="Disponible" type="text" id="availableQuantity[]" name="availableQuantity[]">
+ --}}                                <button type="button" class="btn btn-danger" disabled><i class="fa fa-minus-circle" aria-hidden="true"></i>
                                 </button> </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button  type="button"   data-dismiss="modal" aria-label="Close" class="btn btn-danger " data-bs-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-success"><strong>GUARDAR</strong></button>
             </div>
             </form>
